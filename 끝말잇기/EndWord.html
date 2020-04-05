@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<!--
+     @ 작성자 : 정  훈 
+     @ 이메일 : manbalboy@hanmail.net 
+     @ Git : https://github.com/manbalboy/toyScript   ,  http://manbalboy.iptime.org:30000/hjeong/toyscript
+     @ 끝말잇기 Toy Project
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="wordArea"></div>
+    <input type='text' id="wordInput"/> <button id="inputCheckBtn" onclick="fn_checkWord()">입력</button>
+    <div id="resultArea"></div>
+    <script>
+        var divWordArea =  document.getElementById('wordArea');
+        var curWord = "정훈";
+        var resultArea = document.getElementById('resultArea');
+        // 즉시실행함수
+        (function () {
+            appendWord(curWord); 
+        })();
+
+
+        function appendWord(sWord) {
+            var pTag = document.createElement('p');
+            pTag.innerText = sWord;
+            divWordArea.append(pTag);
+        };
+
+
+        function fn_checkWord () {
+            var sInputWord = document.getElementById('wordInput').value;
+            
+            // null이거나 0 일때 처리
+            if(sInputWord === null || sInputWord.length < 2) {
+                alert('단어를 2자 이상 입력하세요.');
+                document.getElementById('wordInput').focus();
+                return;
+            } 
+
+            if(curWord[curWord.length-1] === sInputWord[0]) {
+                resultArea.innerHTML = '';
+                resultArea.innerHTML = '딩동댕';
+                alert('딩동댕');
+                curWord = sInputWord;
+                appendWord(curWord);
+
+                document.getElementById('wordInput').value = '';
+                document.getElementById('wordInput').focus();
+            } else {
+                resultArea.innerHTML = '';
+                resultArea.innerHTML = '땡';
+                
+                alert('땡');
+                document.getElementById('wordInput').value = '';
+                document.getElementById('wordInput').focus();
+            }
+        }
+    </script>
+</body>
+</html>
