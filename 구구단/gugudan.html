@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+     @ 작성자 : 정  훈 
+     @ 이메일 : manbalboy@hanmail.net 
+     @ Git : https://github.com/manbalboy/toyScript   ,  http://manbalboy.iptime.org:30000/hjeong/toyscript
+     @ Date : 2020.04.05
+     @ 구구단 Toy Project
+    -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="divQuiz"></div>
+    <input type="text" id="iptAnswer" > <button id="inputCheckBtn" onclick="fn_checkGugudan()">입력</button>
+    <div id="divResultArea"></div>
+    
+    <script>
+        let nDan = null;
+        let nDan2 = null; 
+        
+        document.getElementById('iptAnswer').setAttribute( "onkeydown", "javascript:if(event.keyCode==13) {fn_checkGugudan()}");
+
+        function fn_quizMake () {
+            nDan = Math.ceil(Math.random() * 9); // 1~9 단까지 난수 발생
+            nDan2 = Math.ceil(Math.random() * 9);
+            let sStr = '다음의 답을 입력하세요 : ' + nDan + ' 곱하기 ' + nDan2 ;
+            let divQuiz = document.getElementById('divQuiz');
+            divQuiz.innerHTML = ''; // 초기화
+            divQuiz.innerHTML = sStr;
+        };
+
+        fn_quizMake(); // 처음 실행
+        
+        //답 check
+        function fn_checkGugudan () {
+            let iptAnswer =  document.getElementById('iptAnswer');
+            let divResultArea = document.getElementById('divResultArea');
+            if(Number(iptAnswer.value) === (nDan * nDan2)) {
+                divResultArea.innerHTML = '딩동댕';
+                fn_quizMake ();
+                iptAnswer.value = '';
+                iptAnswer.focus();
+            } else {
+                divResultArea.innerHTML = '땡';
+                iptAnswer.value = '';
+                iptAnswer.focus();
+            }
+        };
+    </script>
+</body>
+
+</html>
