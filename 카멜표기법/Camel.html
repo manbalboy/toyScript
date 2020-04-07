@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" >
+<head>
+<meta charset="utf-8">
+<title>카멜표기볍 변환 스크립트</title>
+    
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../hjeong.js"></script>
+
+</head>
+<body>
+
+<textarea id="carmelPreChgTxt" style=" width: 600px; height: 200px"></textarea> <br>
+<br>
+
+<input type="button" value="변환" onclick="javascript:under2camelTxt($('#carmelPreChgTxt').val())">
+<br>
+<br>
+
+<textarea id="carmelPostChgTxt" style=" width: 600px; height: 200px"></textarea>
+
+</body>
+
+
+<script>
+var under2camel = function(str){
+    return str.toLowerCase().replace(/(\_[a-z])/g, function(arg){
+        return arg.toUpperCase().replace('_','');
+    });
+};
+var under2camelTxt = function (str){
+   
+   var strTxt = under2camel(str);
+   
+   $("#carmelPostChgTxt").val(strTxt);
+}
+
+var camel2under = function(str){
+    return str.replace(/([A-Z])/g, function(arg){
+            return "_"+arg.toLowerCase();
+    });
+};
+ 
+</script>
+
+</html>
