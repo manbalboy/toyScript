@@ -28,6 +28,8 @@
 - 랜덤 배열 선택 미구현
 - 화면에 n스트라이크 n볼 표시 미구현
 
+#### 별표찍기
+
 
 ## GIT REPOSITORY URL
 - http://manbalboy.iptime.org:30000/hjeong/toyscript
