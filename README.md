@@ -31,6 +31,9 @@
 #### D-Day 계산기
 - D-Day 를 계산하는 스크립트 
 
+#### Util Js 추가
+- 내가 개발하면서 사용하는 Util 추가 
+
 
 ## GIT REPOSITORY URL
 - http://manbalboy.iptime.org:30000/hjeong/toyscript
