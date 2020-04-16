@@ -32,3 +32,74 @@ function fn_deleteArrayElement(oObject) {
     console.log("type : ", type , "    oOBject : ", oObject);
     return oObject;
 }
+
+
+str.replace(regex, '') 방식으로 정규식을 이용해 바로수정하던지
+
+
+
+두번째방법.
+
+var regexp = /^[0-9]*$/
+
+v = $(this).val();
+
+if( !regexp.test(v) ) {
+
+	alert("숫자만 입력하세요");
+
+	$(this).val(v.replace(regexp,''));
+
+}
+
+
+
+
+
+//1. 숫자만
+
+var regex= /[^0-9]/g
+
+
+
+//2. 한글만
+
+var regex= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+
+
+
+//3. 이메일
+
+var regex=/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{1,5}$/;
+
+
+
+//4. 전화번호
+
+var regex= /^\d{2,3}-\d{3,4}-\d{4}$/;
+
+
+
+//5. 비밀번호
+
+//- 아래와 같은 방법으로 규칙을 정한다음에 포함여부에 따라 처리해주면 됩니다.
+
+
+
+var num = pw.search(/[0-9]/g);
+
+var eng = pw.search(/[a-z]/ig);
+
+var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+
+
+if( (eng >= 0) &&  (num >= 0 || spe >= 0)){
+
+	// 정상
+
+} else {
+
+	// 오류
+
+}

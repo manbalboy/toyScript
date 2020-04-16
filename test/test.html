@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../hjeong.js"></script>
+<script>
+
+    
+    $(document).ready(function(){
+
+        fn_test("CIT");
+    });
+    function fn_test(sStr) {
+
+
+        var T = '<div><input type="text" id="d1"/> <button onclick="fn_move(this,\'U\')">위</button> <button onclick="fn_move(this,\'D\')">아래</button>텍스트<br><br><div>' ;
+        var C = '<div><textarea id="d2"> </textarea><button onclick="fn_move(this,\'U\')">위</button> <button onclick="fn_move(this,\'D\')">아래</button>컨텐츠<br><br> <div>';
+        var I = `<div id="d3"> 
+            
+            <input type="text"> <button onclick="fn_move(this,\'U\')">위</button> <button onclick="fn_move(this,\'D\')">아래</button> 이미지 <br>
+            <input type="text"> <br>
+            <input type="text"> <br><br><br><br>
+        </div>`;
+
+        
+
+        var ParentObject = $("#test");
+        ParentObject.children().remove();
+
+        console.log(sStr.length);
+        if(sStr == null || sStr == undefined || sStr.length !=3) {
+            sStr = "TCI";
+            ParentObject.append('<input type="hidden" name="test" value="TCI"/>');
+
+        }
+
+
+        for(var i in sStr ){
+            switch(sStr[i]){
+                case "T" :
+                ParentObject.append(T);
+                break;
+                case "C" :
+                ParentObject.append(C);
+                break
+                case "I" :
+                ParentObject.append(I); 
+                break;
+
+            }
+        }
+
+        console.log(11);
+
+
+        ParentObject.append();
+    };
+
+    var test ;
+
+
+    function fn_move(oObject,mode) {
+        console.log(oObject.parentNode);
+        var Parent =$(oObject).parent();
+        if(mode == "U") {
+            Parent.prev().before(Parent);
+        } else {
+            Parent.next().after(Parent);
+        }
+
+    };
+
+</script>
+<body>
+    
+    <div id="test">
+        <input type="text" id="d1"/><br>
+        <textarea id="d2"> </textarea><br>
+        <div> <button onclick="fn_move(this,'U')">위</button> <button onclick="fn_move(this,'D')">아래</button>
+            <input type="text"> <br>
+            <input type="text"> <br>
+            <input type="text"> <br>
+        </div>
+
+    </div>
+    
+</body>
+</html>
