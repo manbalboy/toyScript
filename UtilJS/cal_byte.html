@@ -22,7 +22,7 @@
             getByteLength : function(s) {
 
                 if (s == null || s.length == 0) {
-                    return 0;
+                    return '';
                 }
                 var size = 0;
 
@@ -36,7 +36,7 @@
             cutByteLength : function(s, len) {
 
                 if (s == null || s.length == 0) {
-                    return 0;
+                    return '';
                 }
                 var size = 0;
                 var rIndex = s.length;
@@ -78,21 +78,57 @@
 /* 
          charByteSize(ch) : 한글자에 대한 byte를 계산합니다.
          getByteLength(s) : 입력된 글자 전체의 byte를 계산해서 알려줍니다.
-         cutByteLength(s) : 원하는 byte 만큼 글자를 잘라서 반환합니다. */
+         cutByteLength(s) : 원하는 byte 만큼 글자를 잘라서 반환합니다. 
+         
+        UTF-8은 자리수에 따라서 표현되는 문자가 다릅니다. ASCII의 경우 1byte로 표시되고 라틴문자 그리스문자 등은 2byte로 표시되는데, 자리수에 따라 아래와 같이 표현이 됩니다.
+        1byte 이진법 표현 : 0xxxxxxx(0x000000 ~ 0x00007F)
+        ASCII 영역에서 사용하는 영역과 동일합니다.
+        숫자 1을 표현하게 되면 0000 0031로 나타내게 됩니다.
+        
+        2byte 이진법 표현: 110xxxxx 10xxxxxx(0x000080 ~ 0x0007FF)
+        2Byte로 표현하는 경우 첫 byte는 110이 앞에 붙고 2번째 byte의 경우 10이 붙습니다. 
+        
+        3byte 이진법 표현: 1110xxxx 10xxxxxx 10xxxxxx(0x000800 ~ 0x00FFFF)
+        3byte로 표현하는 경우 첫 byte는 1110, 2번째 Byte는 10, 3번째 Byte에는 10이 붙습니다.
+        
+        4byte 이진법 표현: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+        (0x010000 ~ 0x10FFFF)
+        4byte로 표현하는 경우 첫 byte는 11110, 2번째는 10, 3번째는 10, 4번째는 10이 붙습니다.
+         
+*/
 
-         function viewDisplay(obj) {
-            $(".viewByte").html( calByte.getByteLength( obj.value ) );
-            $(".view20Byte").html( calByte.cutByteLength( obj.value, 20 ) );
-        }
+    
+
+    // 이벤트 리스너 등록
+    document.addEventListener('keydown', function(event) {
+        if (event.target.dataset.maxbyte ) { // 속성이 존재할 경우
+        console.log(calByte.cutByteLength( event.target.value, event.target.dataset.maxbyte ))
+            event.target.value = calByte.cutByteLength( event.target.value, Number(event.target.dataset.maxbyte) )
+        };
+    });
+    document.addEventListener('keyup', function(event) {
+        if (event.target.dataset.maxbyte) { // 속성이 존재할 경우
+            event.target.value = calByte.cutByteLength( event.target.value, event.target.dataset.maxbyte )
+        };
+    });
+    document.addEventListener('focusout', function(event) {
+        if (event.target.dataset.maxbyte) { // 속성이 존재할 경우
+            event.target.value = calByte.cutByteLength( event.target.value, event.target.dataset.maxbyte )
+        };
+    });
 
 
     </script>
 </head>
 <body>
 
-    <textarea name="contents" style="width:99%;height:100px;" onkeyup="viewDisplay(this)"></textarea>
-    <p><span class="viewByte red"></span>byte입니다.</p>
-    <p>20byte까지만 보여주기 : <span class="view20Byte red"></span></p>
+    <textarea name="contents" style="width:99%;height:100px;" ></textarea>
+    <!-- 10byte -->
+    <textarea name="contents" style="width:99%;height:100px;"  data-maxbyte="10"></textarea>
+    <!-- 100byte -->
+    <textarea name="contents" style="width:99%;height:100px;"  data-maxbyte="100"></textarea>
+     <!-- 300byte -->
+    <input type="text" data-maxbyte="30"/>
 
     <p><br/></p>
     <p><br/></p>
