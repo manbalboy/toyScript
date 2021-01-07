@@ -33,7 +33,7 @@
 
 #### Util Js 추가
 - 내가 개발하면서 사용하는 Util 추가 
-
+- 함수형프로그래밍 연습
 
 ## GIT REPOSITORY URL
 - http://manbalboy.iptime.org:30000/hjeong/toyscript
