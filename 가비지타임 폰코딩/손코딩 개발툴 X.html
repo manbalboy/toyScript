@@ -25,10 +25,29 @@
 
 ###
 다변수 함수가 인수를 전부 받을 때까지 실행을 보류, 또는 지연시켜 단항 함수의 순차열로 전환하는 기법
-
 curry(f) : ((a,b,c) -> d) -> a -> b -> c -> d
-
 <script>
+    function curry(func) {
+        return function curried(...args) {
+            if (args.length >= func.length) {
+                return func.apply(this, args);
+            } else {
+                return function(...args2) {
+                    return curried.apply(this, args.concat(args2));
+                }
+            }
+        };
+    }
+     
+    function sum(a, b, c) {
+        return a + b + c;
+    }
+
+    let curriedSum = curry(sum);
+
+    alert( curriedSum(1, 2, 3) ); // 6, 보통때 처럼 단일 callable 형식으로 호출하기
+    alert( curriedSum(1)(2,3) ); // 6, 첫 번째 인수를 커링하기
+    alert( curriedSum(1)(2)(3) ); // 6, 모두 커링하기
 
 </script>
 
