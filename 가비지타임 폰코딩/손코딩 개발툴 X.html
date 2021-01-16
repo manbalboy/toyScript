@@ -53,8 +53,65 @@ curry(f) : ((a,b,c) -> d) -> a -> b -> c -> d
 
 # 이벤트루프
 - 태스크큐 setTimeOut setInterval Promise
-<script>
+- 아래 스크립트 순서 맞춰보라.
+     console.log('script start'); 
 
+     setTimeout(function() {
+       console.log('setTimeout');
+     }, 0);
+
+     Promise.resolve().then(function() {
+       console.log('promise1');
+     }).then(function() {
+       console.log('promise2');
+     });
+     
+
+
+     setTimeout(function() {
+       console.log("setTimeout");
+     }, 0);
+
+     Promise.resolve().then(function() {
+       console.log("promise1");
+     }).then(function() {
+       console.log("promise2");
+     });
+
+     requestAnimationFrame(function() {
+         console.log("requestAnimationFrame");
+     })
+
+     console.log('script end');
+     
+<script>
+     console.log('script start'); 
+
+     setTimeout(function() {
+       console.log('setTimeout');
+     }, 0);
+
+     Promise.resolve().then(function() {
+       console.log('promise1');
+     }).then(function() {
+       console.log('promise2');
+     });
+     
+          setTimeout(function() {
+       console.log("setTimeout");
+     }, 0);
+
+     Promise.resolve().then(function() {
+       console.log("promise1");
+     }).then(function() {
+       console.log("promise2");
+     });
+
+     requestAnimationFrame(function() {
+         console.log("requestAnimationFrame");
+     })
+
+     console.log('script end');
 </script>
 </body>
 
