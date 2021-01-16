@@ -20,9 +20,43 @@
 <body>
 # script 영역 안에 하나씩 채워 넣고 설명은 필수 입니다.
 
-##
+## 정규표현식 영역
+     
+### 패턴과 플래그 
+- 문법 
+  regexp = new RegExp("pattern", "flags");
+  regexp = /pattern/; // 플래그가 없음
+  regexp = /pattern/gmi; // 플래그 g, m, i가 있음
+     
+- match() : 검색
+- replace() : 치환
 <script>
+     let str = "We will, we will rock you";
+     alert( str.match(/we/gi) ); // We,we (패턴과 일치하는 부분 문자열 두 개를 담은 배열)
+     
+     let str = "We will, we will rock you";
 
+     let result = str.match(/we/i); // 플래그 g 없음
+
+     alert( result[0] );     // We (패턴에 일치하는 첫 번째 부분 문자열)
+     alert( result.length ); // 1
+
+     // Details:
+     alert( result.index );  // 0 (부분 문자열의 위치)
+     alert( result.input );  // We will, we will rock you (원본 문자열)
+     
+     
+ //    let matches = "JavaScript".match(/HTML/); // matches엔 null이 저장됨
+
+ //    if (!matches.length) { // TypeError: Cannot read property 'length' of null
+ //      alert("바로 윗줄에서 에러가 발생합니다.");
+ //    }
+     
+     let matches = "JavaScript".match(/HTML/) || [];
+
+     if (!matches.length) {
+       alert("정규 표현식과 일치하는 부분 문자열이 없습니다."); // 이제 에러없이 잘 동작하네요.
+     }
 </script>
 
 <script>
