@@ -40,6 +40,7 @@
 - 학습을 하고 남을 가르쳐줄수 없으면 내것이 아니요 가르쳐줄수 있는 정도의 학습과 예제정리 손코딩
 - 이벤트루트와 타스크큐
 - 정규식 
+- Promise
 
 ## GIT REPOSITORY URL
 - http://manbalboy.iptime.org:30000/hjeong/toyscript
