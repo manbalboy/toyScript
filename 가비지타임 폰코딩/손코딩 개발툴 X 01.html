@@ -110,6 +110,14 @@
      // 이 배열로 숫자만 있는 전화번호를 만듭시다.
      console.log( str.match(regexp).join('') ); // 79035419441
 </script>
+     
+let regexp = /\p{sc=Han}/gu; // 한자를 반환
+
+let str = `Hello Привет 你好 123_456`;
+
+alert( str.match(regexp) ); // 你,好
+     
+     
 </body>
 
 
