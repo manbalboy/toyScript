@@ -19,15 +19,23 @@
 </head>
 <body>
 # 정규식 <br><br>
-캐럿(caret) 기호 ^와 달러 기호 $는 정규식에서 특별한 뜻을 지닙니다. 두 기호를 '앵커(anchor)'라고 합니다.<br>
-<br>
-캐럿 기호 ^는 텍스트의 시작, 달러 기호 $는 텍스트의 끝을 나타냅니다.<br>
+## 캐럿(caret) 기호 ^와 달러 기호 $는 정규식에서 특별한 뜻을 지닙니다. 두 기호를 '앵커(anchor)'라고 합니다.<br>
+   <br>
+   캐럿 기호 ^는 텍스트의 시작, 달러 기호 $는 텍스트의 끝을 나타냅니다.<br>
 
      ex) let str1 = "it's fleece was white as snow";<br>
          alert( /snow$/.test(str1) ); // true <br>
      
      ex) let str1 = "it's fleece was white as snow";<br>
          alert( /^it/.test(str1) ); // true <br>
+     
+## 단어 경계 : \ b <br>
+     \b 는 단어 경계를 나타내는 정규식 \w \w 양끝단의 워드 표현식을구분하여 찾는다. 한글 X
+     
+     
+     ex) alert( "Hello, Java!".match(/\bJava\b/) ); // Java
+     ex) alert( "Hello, JavaScript!".match(/\bJava\b/) ); // null
+     
 <script>
 
 </script>
