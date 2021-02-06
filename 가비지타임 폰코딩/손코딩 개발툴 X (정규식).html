@@ -31,11 +31,46 @@
      
 ## 단어 경계 : \ b <br>
      \b 는 단어 경계를 나타내는 정규식 \w \w 양끝단의 워드 표현식을구분하여 찾는다. 한글 X
-     
+          
      
      ex) alert( "Hello, Java!".match(/\bJava\b/) ); // Java
      ex) alert( "Hello, JavaScript!".match(/\bJava\b/) ); // null
+     
 ## 범위검색 [...] […]는 "주어진 문자 중 임의의 문자 검색
+
+     
+## 수량자 +, *, ? 및 {n}
+     @ {n}
+          가장 간단한 수량자 {n} 괄호안에 필요한 수 찾기 
+          ex) alert( "I'm 12345 years old".match(/\d{5}/) ); //  "12345"
+
+          범위 : {3,5}, 3-5 회 일치
+          ex) alert( "I'm not 12, but 1234 years old".match(/\d{3,5}/) ); // "1234"
+
+          범위 : {3,} 3자리수 이상
+          ex) alert( "I'm not 12, but 345678 years old".match(/\d{3,}/) ); // "345678"
+     
+     
+     @ +
+          하나이상을 의미 == {1,}
+          ex)
+               let str = "+7(903)-123-45-67";
+
+               alert( str.match(/\d+/g) ); // 7,903,123,45,67
+     
+     
+     @ ? 
+          "0 또는 1"을 의미하며 {0,1}. 즉, 기호를 선택적으로 만듭니다.
+          ex)
+               let str = "Should I write color or colour?";
+
+               alert( str.match(/colou?r/g) ); // color, colour  
+     
+     @ *
+          "0 개 이상"을 의미 {0,}
+          ex) alert( "100 10 1".match(/\d0*/g) ); // 100, 10, 1
+     
+     
 <script>
 
 </script>
