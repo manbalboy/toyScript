@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dataset 변환 유틸</title>
+</head>
+<body>
+    <textarea id="carmelPerChgTxt" style="width: 600px; height: 200;"></textarea>
+    <textarea id="test1" style="width: 600px; height: 200;"></textarea>
+
+    <br>
+    <br>
+
+    <input type="button" value='변환' onclick="javascript:fn_test()">
+
+    <br>
+    <br>
+    <textarea id="carmelPostChgTxt" style="width: 600px; height: 200;"></textarea>
+    <textarea id="carmelPostChgTxt2" style="width: 600px; height: 200;"></textarea>
+    <br>
+    <textarea id="carmelPostChgTxt3" style="width: 600px; height: 200;"></textarea>
+    <textarea id="carmelPostChgTxt4" style="width: 600px; height: 200;"></textarea>
+
+</body>
+<script>
+    var test = "";
+    var xmlDoc ;
+
+    function fn_test() {
+        test = document.getElementById('carmelPreChgTxt').value;
+        
+        var sStr = document.getElementById('test1').value;
+        
+        if(sStr[sStr.length-1] ==  ",") {
+            sStr = sStr.slice(0, -1);
+        }
+
+        var sJsonStr = JSON.parse("{" + sStr +  "}");
+
+
+        test = test.replace(/id=/gi, 'Id=');
+
+        var datasetColArr = [];
+        var datasetText = "";
+        var datasetColText = "";
+        var dataSet = "";
+        var datasetMapStrText = "";
+        var datasetListStrText = "";
+
+        var parser = new DOMParser();
+        xmlDoc = parser.parseFromString(test, "text/xml");
+        var oDatasetObject = xmlDoc.querySelectorAll("Dataset");
+
+        for(oData of oDatasetObject) {
+            datasetColArr = [];
+            datasetText += "\n ======== [시작]" + oData.getAttribute("Id") +  "========\n\n";
+            datasetColText += "\n ======== [시작]" + oData.getAttribute("Id") +  "========\n\n";
+            var sIdStr  = oData.getAttribute("Id");
+            var sIdStrList = sIdStr.replace("ds", "dtl_");
+            var sIdStrMap = sIdStr.replace("ds", "dma_");
+
+
+            sIdStrList = sIdStrList.replace(/\_./, function (arg) {
+                return arg.toLowerCase();
+            });
+
+
+            sIdStrMap = sIdStrList.replace(/\_./, function (arg) {
+                return arg.toLowerCase();
+            });
+
+            datasetMapStrText += "\n=======[시작]" + oData.getAttribute("Id")+ "=============\n\n";
+            datasetMapStrText += '<w2:dataMap baseNode="map" id="' + sIdStrMap + '">\n';
+            datasetMapStrText += '\t <w2:keyInfo>\n';
+
+            datasetListStrText += "\n=======[시작]" + oData.getAttribute("Id")+ "=============\n\n";
+            datasetListStrText += '<w2:dataList baseNod="list" repeatNod="map" id="' + sIdStrList + '" saveRemovedData="true">\n';
+            datasetListStrText += "\t<w2:columnInfo>\n";
+
+
+            var oColinfoObject = oData.querySelectorAll("colinfo");
+
+            for(oColinfo of oColinfoObject) {
+                var sName = sJsonStr[oColinfo.getAttribute("Id")] == undefined ? "" : sJsonStr[oColinfo.getAttribute("Id")];
+                datasetText += oColinfo.getAttribute("Id") + "\t" + sName + "\n";
+                datasetColArr.push(oColinfo.getAttribute("Id"));
+
+
+                datasetListStrText += '\t\t<w2:column id="' + oColinfo.getAttribute("Id") + '" name="' + sName +'" dataType="text"></w2:column>\n';
+
+                datasetMapStrText += '\t\t<w2:key id="'  + oColinfo.getAttribute("Id") +'" name="' + sName +'" dataType="text"></w2:key>\n';
+            }
+
+            datasetListStrText += '\t</w2:columnInfo>\n';
+            datasetListStrText += '\t<w2:data use="true">\n';
+
+
+
+            datasetMapStrText += '\t</w2:keyInfo>\n';
+            datasetMapStrText += '\t<w2:data use="false"></w2:data>\n';
+
+
+            var oDualDataObject = oData.querySelectorAll("record");
+
+            for(oDualData of oDualDataObject) {
+                datasetListStrText += '\t\t<w2:row>\n';
+                
+                for(a of datasetColArr) {
+                    if(oDualData.querySelector(a) != null) {
+                        datasetListStrText += '\t\t\t<' + a + '><!CDATA[' + oDualData.querySelector(a).textContent+']]></'+a+'>\n';
+                        datasetColText += oDualData.querySelector(a).textContent + "\t";
+                    } else {
+                        datasetListStrText += '\t\t\t <'+a+'><!CDATA[]]></'+a+'>\n';
+                        datasetColText +=  '\t';
+                    }
+                }
+
+                datasetColText += "\n";
+                datasetListStrText += '\t\t</w2:row>\n';
+            };
+
+
+
+            datasetListStrText += '\t</w2:data>\n';
+            datasetListStrText += '</w2:dataList>\n\n\n';
+
+
+            datasetMapStrText += '</w2:dataMap>\n\n\n';
+
+
+        }
+
+
+
+
+
+        document.getElementById('carmelPostChgTxt').value = datasetText ;
+        document.getElementById('carmelPostChgTxt2').value = datasetColText ;
+        document.getElementById('carmelPostChgTxt3').value = datasetListStrText ;
+        document.getElementById('carmelPostChgTxt4').value = datasetMapStrText ;
+
+
+
+
+
+
+
+
+    }
+
+
+</script>
+
+
+
+</html>
