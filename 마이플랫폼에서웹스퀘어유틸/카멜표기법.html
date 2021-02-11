@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카멜 표기법 및 유틸 스크립트</title>
+</head>
+<body>
+    <textarea id="carmelPerChgTxt" style="width: 600px; height: 200;"></textarea>
+    <textarea id="carmelPerChgTxt1" style="width: 600px; height: 200; background-color: yellow;"></textarea>
+    <textarea id="openM1" style="width: 600px; height: 200; background-color: green;"></textarea>
+    <textarea id="functionStr" style="width: 600px; height: 200; background-color: red;"></textarea>
+    <textarea id="functionStr3" style="width: 600px; height: 200; background-color: black; color: white;"></textarea>
+
+    <br>
+    <br>
+
+    <input type="button" value='변환' onclick="javascript:under2camelTxt()">
+
+    <br>
+    <br>
+
+    <textarea id="carmelPostChgTxt" style="width: 600px; height: 200;"></textarea>
+    <textarea id="carmelPostChgTxt1" style="width: 600px; height: 200; background-color: yellow;"></textarea>
+    <textarea id="openM2" style="width: 600px; height: 200; background-color: green;"></textarea>
+    <textarea id="functionStr2" style="width: 600px; height: 200; background-color: red;"></textarea>
+    <textarea id="functionStr4" style="width: 600px; height: 200; background-color: black; color: white;"></textarea>
+
+
+    <br>
+
+    <textarea id="carmelPostChgTxt3" style="width: 600px; height: 200;"></textarea>
+    <textarea id="carmelPostChgTxt4" style="width: 600px; height: 200;"></textarea>
+    <textarea id="functionStr5" style="width: 600px; height: 200; background-color: red;"></textarea>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <span>=================================================================================</span>
+    <input id="classNm" type="text" value="" style="background-color: blue; color: white;">
+
+    <br>
+    <br>
+
+    <textarea id='carmelPreChgTxtJava' style="width: 600px; height: 200px; background-color: gray;"></textarea>
+    <textarea id='createSubmission' style="width: 600px; height: 200px; background-color: blue; color: white;"></textarea>
+
+    <br>
+    <br>
+
+    <input type="button" value="변환" onclick="javascript:fJavaTxt()">
+
+    <br>
+    <br>
+
+    <textarea id='carmelPreChgTxtJavaOut' style="width: 600px; height: 200px; background-color: gray;"></textarea>
+    <textarea id='createSubmission2' style="width: 600px; height: 200px; background-color: blue; color: white;"></textarea>
+
+</body>
+    <script>
+        var rdashAlpha = /-([a-z])/g;
+
+        var fcamelCase = function (_all, letter) {
+            return letter.toUpperCase();
+        }
+
+        var camelCase = function (sString) {
+            return sString.replace(rdashAlpha, fcamelCase);
+        }
+
+        var under2camel = function (str) {
+            return str.toLowerCase().replace(/(\_[a-z])/g, function (arg){
+                return arg.toUpperCase().replace('_','');
+            });
+        }
+
+        var sss;
+        var sss1;
+        var aaa1;
+        var eee;
+        var aaa2;
+        var arr1
+        var manbalboy;
+        var fJavaTxt = function () {
+            var strTxt = document.getElementById('carmelPreChgTxtJava').value;
+            var sClassNm = document.getElementById('classNm').value;
+            var strTxt2 = document.getElementById('createSubmission').value;
+
+            manbalboy = strTxt2;
+
+            var aAttr = manbalboy.split("(")[1];
+            var aAttr = aAttr.split(")")[0];
+            var aAttr = aAttr.split(",");
+
+            var aAttr2 = aAttr.map(function (item){
+                return item.trim();
+            });
+
+
+            aAttr2[1] = aAttr2[1].split(".");
+
+            var sTemp = "";
+
+            aAttr2[1].forEach(function (item, index){
+                if(item.includes("mip")){
+                    sTemp = aAttr2[1][index-2];
+                    aAttr2[1] = aAttr2[1][index-1];
+                }
+            });
+
+            aAttr2[1] = aAttr2[1].replace(/^./, aAttr2[1][0].toLowerCase());
+
+            var sSbmId = "sbm_" + aAttr2[1];
+            var sSubmitdone = "scwin." + sSbmId + "_submitdone"; 
+            var sSubmiterror = "scwin." + sSbmId + "_submiterror";
+            var sAction = `/${sTemp}/${sClassNm}/${aAttr2[1]}/v1`;
+            var aInData = aAttr2[2].split(" ");
+            var sInString = "";
+            
+            aInData.forEach(function (item, index){
+                item = item.replace(/\"/, "");
+                item = item.trim();
+
+                if(item != "" && item != null) {
+                    var aItem = item.split("=");
+                    if(sInString == "") {
+                        sInString += `{"id" : "${aItem[1]}" ,  "key" : "${aItem[0]}"}`;
+                    } else {
+                        sInString += `, {"id" : "${aItem[1]}" ,  "key" : "${aItem[0]}"}`;
+                    }
+                }
+            });
+
+
+            var aOutData = aAttr2[3].split(" ");
+            var sOutString = "";
+
+            aOutData.forEach(function (item, index){
+                item = item.replace(/\"/, "");
+                item = item.trim();
+
+                if(item != "" && item != null) {
+                    var aItem = item.split("=");
+                    if(sOutString == "") {
+                        sOutString += `{"id" : "${aItem[1]}" ,  "key" : "${aItem[0]}"}`;
+                    } else {
+                        sOutString += `, {"id" : "${aItem[1]}" ,  "key" : "${aItem[0]}"}`;
+                    }
+                }
+            });
+
+            var sParam = aAttr2[4].trim();
+            if(sParam != "" && sParam != "null") {
+                if(sInString == "") {
+                    sInString += `{"id" : "dma_${aAttr2[1]}", "key" : "dma_${aAttr2[1]}"}`;
+                }
+                sInString += `, {"id" : "dma_${aAttr2[1]}", "key" : "dma_${aAttr2[1]}"}`;
+            }
+
+
+            var subData = `
+            <xf:submission id="${sSbmId}" ref='${sInString == "" ? '' : 'data:json,['+sInString+']'}'
+                target='${sOutString == "" ? '' : 'data:jaon,['+sOutString+']'}' action="${sAction}"
+                method="post" mediatype="application/json" encoding="UTF-8" instance="" errorHandler="" customHandler="" mode="asynchronous"
+                processMsg="조회중입니다." ev:submit="" ev:submitdone="${sSubmitdone}" ev:submiterror="${sSubmiterror}"
+                abortTrigger="">
+            </xf:submission>`;
+            subData += "\n\n\n";
+            subData += "============controller============\n";
+
+            subData += ` 
+                @PostMapping(value="${sAction}")
+                Map<String, Object> ${aAttr2[1]} (@RequestBody(required = false) Map<String, Object> dsInput, @RequestParam Map<String, Object> dsParam) {
+                    return ${sClassNm}Service.${aAttr2[1]}(dsInput, dsParam);
+                }
+            `
+            
+            subData += "\n\n\n";
+
+            document.getElementById('createSubmission2').value = subData;
+
+
+            arr1 = strTxt.split(", ");
+            arr1 = arr1.map(function (item, index){
+                if(index == 0){
+                    item = item.replace("{", '{ "');
+                } else {
+                    item = ' "' + item;
+                }
+
+                item = item.replace("=", '":"');
+                if(index == arr1.length -1) {
+                    item. item.replace('}', '"}' );
+                } else {
+                    item = item+'"';
+                }
+
+                return item;
+            });
+
+            var strTxt2 = arr1.join();
+
+
+            var sS = "";
+
+            try{
+                var oObj = Array.isArray(eval(strTxt2)) ? eval(strTxt2)[0] : eval("["+strTxt2+"]")[0];
+                sS = Object.keys(oObj).reduce(function (a, b) {
+
+                    return a+ "\n" + b
+                }, "");
+            } catch(e) {
+                try {
+                    var oObj = eval("["+strTxt2+"]")[0];
+                    sS = Object.keys(oObj).reduce(function (a, b) {
+                        return a+ "\n" + b
+                    }, "");
+
+                } catch(e) {
+
+                }
+            }
+
+            document.getElementById('caremlPreChgTxtJavaOut').value = sS;
+
+        };
+
+        var tttt ; 
+        var qqqq ;
+        var under2camelTxt = function () {
+            var strTxt = under2camel (document.getElementById('carmelPreChgTxt').value);
+            var strTxt2 = document.getElementById("carmelPreChgTxt1").value;
+            var strTxt3 = document.getElementById("openM1").value;
+            var strTxt4 = document.getElementById("functionStr").value;
+            var strTxt5 = document.getElementById("functionStr3").value;
+
+
+            tttt = strTxt4;
+            var a123 = tttt.split(")");
+            var a321 = a123.filter(function (item){
+                if(item.includes("function")){
+                    return true;
+                }
+            }) ;
+
+            var a1234 = a321.map(function (item){
+                return item.split("function")[1]
+            });
+
+            var a12 = a1234.map(function (item){
+                return item.trim() + ")" 
+            });
+
+            var test123 = a12.reduce(function (a, b) {
+                return a + "\n" + b
+            }, "");
+
+            document.getElementById("functionStr2").value = test123;
+
+
+            var a12qqq = a1234.map(function (item){
+                return "scwin." + item.trim() + ")"
+            });
+
+            var test123456 = a12qqq.reduce(function (a, b) {
+                return a + "\n" + b;
+            }, "");
+
+            document.getElementById("functionStr5").value = test123456;
+
+
+
+
+            qqqq = strTxt5;
+            var a123 = qqqq.replace(/\s/g, "").split("){") ;
+            var a321 = a123.filter(function (item) {
+                if(item.includes("function")) {
+                    return true;
+                }
+            });
+
+
+            var a1234 = a321.map(function(item) {
+                var itemSplitVal = item;
+                if(item.split("*/").length >1) {
+                    itemSplitVal = item.split("*/")[1];
+                }
+                return itemSplitVal;
+            });
+
+            var a1235 = a1234.filter(function (item){
+                if(item != undefined) {
+                    return true;
+                }
+            });
+
+            var qwer1 = a1234.filter(function(item) {
+                if(item.includes("=function") || item.includes("asyncfunction")){
+                    return true;
+                }
+            });
+
+            var qwer2 = qwer1.map(function (item){
+                item = item.replace(/\;/g, "");
+                var itemSplitVal = item;
+                var arrtempStr = item.split("}");
+
+                if(arrtempStr.length > 1) {
+                    for(var z=0; z < arrtempStr.length; z++) {
+                        if(arrtempStr[z].includes("scwin")) {
+                            itemSplitVal = arrtempStr[z];
+                        }
+                    }
+                }
+
+                return itemSplitVal.trim();
+            });
+
+
+            var qwer3 = qwer2.map(function (item) {
+                item = item.replace(/\=|\s/g, "") ;
+                item = item.replace(/asyncfunction|function/g, "") ;
+                var arrtempStr = item.split("scwin.");
+                item = arrtempStr[arrtempStr.length-1];
+                return "scwin."+item.trim()+")";
+            });
+
+            var test1234 = qwer3.reduce(function (a, b) {
+                return a + "\n" + b;
+            } , "");
+
+
+            document.getElementById("functionStr4").value = test1234;
+
+            //openM 은 안하겠음
+
+
+            var aArr = strTxt.split("\n");
+            var test1 = aArr.map(item => item.replace(/(.*?\.)/,""));
+            test1 = test1.map(item => item.replace(/\/\*.*?\*\//,"").trim());
+            var datasetListStrText = "";
+            var datasetMapStrText = "";
+            var oDataListObjectId = "dtl_XXX";
+            var oDataMapObjectId = "dml_XXX";
+            var datasetColArr = [];
+
+            //List 전환
+            datasetListStrText += '<w2:dataList baseNode="list" repeatNode="map" id=' + oDataListObjectId+ '" saveRemovedData="true">\n' ; 
+            datasetListStrText += '\t<w2:columnInfo>\n';
+            
+            //map 전환
+            datasetMapStrText += '<w2:dataMap baseNode="map" id="' + oDataMapObjectId + '>\n';
+            datasetMapStrText += '\t<w2:keyInfo>\n';
+
+
+            test1.forEach(function (item, idx){
+                var aColId = item.split(" ");
+                var sColId = aColId[aColId.length-1];
+                datasetColArr.push(sColId);
+                if(sColId != null && sColId != "") {
+                    // list
+                    datasetListStrText += '\t\t<w2:column id="'+sColId+'" name="" dataType="text"></w2:column>\n';
+                    //map
+                    datasetMapStrText += '\t\t<w2:key id="' + sColId + '" name="" dataType="text"></w2:key>\n';
+                }
+
+            });
+
+
+            datasetListStrText +=  "\t</w2:columnInfo>\n";
+            datasetListStrText +=  "</w2:dataList>\n";
+
+            datasetMapStrText +="\t</w2:keyInfo>\n";
+            datasetMapStrText +="</w2:dataMap>\n";
+
+
+
+            document.getElementById('carmelPostChgTxt').value = strTxt;
+            document.getElementById('carmelPostChgTxt3').value = datasetListStrText;
+            document.getElementById('carmelPostChgTxt4').value = datasetMapStrText;
+
+
+            try{
+                var oObj = Array.isArray(eval(strTxt2)) ? eval(strTxt2)[0] : eval("["+strTxt2+"]")[0];
+                sS = Object.keys(oObj).reduce(function (a, b) {
+
+                    return a+ "\n" + b
+                }, "");
+            } catch(e) {
+                try {
+                    var oObj = eval("["+strTxt2+"]")[0];
+                    sS = Object.keys(oObj).reduce(function (a, b) {
+                        return a+ "\n" + b
+                    }, "");
+
+                } catch(e) {
+
+                }
+            }
+
+            document.getElementById('carmelPostChgTxt1').value = sS;
+        }
+
+
+        var camel2under = function (str) {
+            return str.replace(/([A-Z])/g, function (arg){
+                return "_"+arg.toLowerCase();
+            });
+        };
+
+
+
+    </script>
+</html>
